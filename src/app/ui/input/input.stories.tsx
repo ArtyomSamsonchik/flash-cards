@@ -17,7 +17,7 @@ const inputClasses =
 const inputAdornmentArgType = {
   description: `Can be used to extend the input functionality or its design/layout.
     This can be any arbitrary react element, but it is recommended to wrap such an element
-    in an "InputAdornment" element that provides styles to align and limit the size
+    in an \`InputAdornment\` element that provides styles to align and limit the size
     of its contents.`,
   table: { type: { summary: 'ReactNode' } },
 }
@@ -32,7 +32,7 @@ const meta = {
       description: `An object containing the names of the classes corresponding to the
         component slots. Provided classnames will be merged with default slots classnames.\t
         Additionally you can specify slots names combined with capitalized modifiers
-        of type "disabled" | "error" instead of manually calculating class names
+        of type \`disabled | error\` instead of manually calculating class names
         based on the values of the corresponding props.`,
       table: {
         defaultValue: { summary: 'undefined' },
@@ -70,7 +70,7 @@ const meta = {
     ),
   ],
   tags: ['autodocs'],
-  title: 'Components/Inputs/Input',
+  title: 'Components/Input',
 } satisfies Meta<typeof Input>
 
 export default meta
@@ -96,7 +96,7 @@ const getAdornments = (position: 'end' | 'start' = 'start') => ({
 
 const options = Object.keys(getAdornments())
 
-export const Default: Story = {
+export const Primary: Story = {
   argTypes: {
     endAdornment: {
       mapping: getAdornments('end'),
@@ -111,25 +111,25 @@ export const Default: Story = {
 }
 
 export const Error: Story = {
-  argTypes: Default.argTypes,
+  argTypes: Primary.argTypes,
   args: {
-    ...Default.args,
+    ...Primary.args,
     error: true,
   },
 }
 
 export const StartAdornment: Story = {
-  argTypes: Default.argTypes,
-  args: { ...Default.args, startAdornment: 'search icon' },
+  argTypes: Primary.argTypes,
+  args: { ...Primary.args, startAdornment: 'search icon' },
 }
 
 export const EndAdornment: Story = {
-  argTypes: Default.argTypes,
-  args: { ...Default.args, endAdornment: 'eye icon' },
+  argTypes: Primary.argTypes,
+  args: { ...Primary.args, endAdornment: 'eye icon' },
 }
 
 export const BothAdornments: Story = {
-  argTypes: Default.argTypes,
+  argTypes: Primary.argTypes,
   args: {
     ...StartAdornment.args,
     ...EndAdornment.args,

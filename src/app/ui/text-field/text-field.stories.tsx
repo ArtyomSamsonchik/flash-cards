@@ -1,0 +1,94 @@
+import * as InputStories from '@/app/ui/input/input.stories'
+import { Meta, StoryObj } from '@storybook/react'
+
+import { TextField, TextFieldSlot } from './text-field'
+
+// prettier-ignore
+const textFieldClassesObj = Object.fromEntries(
+  (['textFieldRoot', 'root', 'message', 'label', 'input'] as TextFieldSlot[]).map(
+    slot => [slot, 'string']
+  )
+)
+const textFieldClasses =
+  JSON.stringify(textFieldClassesObj, null, 2) +
+  ` & {
+    "rootDisabled": "string",
+    "inputError": "string",
+    ...etc
+  }`
+
+/**
+ * TextField element based on common [Input](?path=/docs/components-input--docs) element.
+ * Almost all Input props are supported.
+ * */
+const meta = {
+  argTypes: {
+    label: {
+      description: `Label is used to give context about a field's input,
+        such as how the input will be used.`,
+    },
+    message: {
+      description: `Message element is used to provide feedback to the user,
+        such as an error message. `,
+    },
+    ...InputStories.default.argTypes,
+
+    classes: {
+      description: InputStories.default.argTypes.classes.description,
+      table: {
+        defaultValue: { summary: 'undefined' },
+        type: {
+          detail: textFieldClasses,
+          summary: "WithModifiers<TextFieldClasses, 'disabled' | 'error'>",
+        },
+      },
+    },
+  },
+
+  component: TextField,
+  decorators: InputStories.default.decorators,
+  title: 'Components/TextField',
+} satisfies Meta<typeof TextField>
+
+export default meta
+
+type Story = StoryObj<typeof meta>
+
+export const Primary: Story = {
+  argTypes: InputStories.Primary.argTypes,
+  args: {
+    label: 'label',
+    message: 'descriptive message',
+    ...InputStories.Primary.args,
+  },
+}
+export const Error: Story = {
+  args: {
+    ...Primary.args,
+    ...InputStories.Error.args,
+  },
+}
+
+export const StartAdornment: Story = {
+  argTypes: Primary.argTypes,
+  args: {
+    ...Primary.args,
+    ...InputStories.StartAdornment.args,
+  },
+}
+
+export const EndAdornment: Story = {
+  argTypes: Primary.argTypes,
+  args: {
+    ...Primary.args,
+    ...InputStories.EndAdornment.args,
+  },
+}
+
+export const BothAdornments: Story = {
+  argTypes: Primary.argTypes,
+  args: {
+    ...Primary.args,
+    ...InputStories.BothAdornments.args,
+  },
+}

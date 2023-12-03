@@ -6,8 +6,8 @@ import { Typography } from '@/app/ui/typography'
 
 import s from './text-field.module.scss'
 
-type TextFieldSlot = 'label' | 'message' | 'textFieldRoot' | InputSlot
-type TextFieldClasses = ClassesObj<TextFieldSlot, InputSlotModifier>
+export type TextFieldSlot = 'label' | 'message' | 'textFieldRoot' | InputSlot
+export type TextFieldClasses = ClassesObj<TextFieldSlot, InputSlotModifier>
 
 type OwnProps = {
   classes?: TextFieldClasses
