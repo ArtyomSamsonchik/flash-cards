@@ -15,7 +15,7 @@ type OwnProps = {
   message?: string
 }
 
-type TextFieldProps = OwnProps & Omit<InputProps, keyof OwnProps>
+export type TextFieldProps = OwnProps & Omit<InputProps, keyof OwnProps>
 
 const textFieldSlots: TextFieldSlot[] = ['textFieldRoot', 'label', 'message', 'root', 'input']
 

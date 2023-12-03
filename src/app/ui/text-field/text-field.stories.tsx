@@ -26,10 +26,12 @@ const meta = {
     label: {
       description: `Label is used to give context about a field's input,
         such as how the input will be used.`,
+      table: { type: { summary: 'string ' } },
     },
     message: {
       description: `Message element is used to provide feedback to the user,
         such as an error message. `,
+      table: { type: { summary: 'string ' } },
     },
     ...InputStories.default.argTypes,
 
@@ -47,6 +49,7 @@ const meta = {
 
   component: TextField,
   decorators: InputStories.default.decorators,
+  parameters: { docs: { autodocs: false } },
   title: 'Components/TextField',
 } satisfies Meta<typeof TextField>
 
