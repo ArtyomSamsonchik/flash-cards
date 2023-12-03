@@ -20,6 +20,7 @@ const meta = {
           Must be used in conjunction with onCheckedChange.`,
     },
 
+    // TODO: refactor classes prop to use getClassNames helper
     classes: {
       description: `An object containing the names of the classes corresponding to the
       component slots. Provided classnames wil be merged with default slots classnames.`,
@@ -37,6 +38,8 @@ const meta = {
         Use when you do not need to control its checked state.`,
       table: { type: { summary: 'boolean' } },
     },
+
+    disabled: { table: { type: { summary: 'boolean' } } },
 
     name: { table: { type: { summary: 'string' } } },
 

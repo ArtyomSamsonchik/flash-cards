@@ -3,7 +3,7 @@ import { clsx } from 'clsx'
 
 type SlotsMap<T extends string> = Record<T, string>
 type ModifiersMap<T extends string> = Record<T, any>
-type NotExisting = null | undefined
+type Nullish = null | undefined
 
 // prettier-ignore
 export type ClassesObj<
@@ -12,11 +12,11 @@ export type ClassesObj<
   ? Partial<SlotsMap<Slot>>
   : Partial<SlotsMap<`${Slot}${Capitalize<Modifier>}`> & SlotsMap<Slot>>
 
-const configure = <Slot extends string, Option extends string = never>(
+const configure = <Slot extends string, Modifier extends string = never>(
   slotNames: Slot[],
-  modifiers?: ModifiersMap<Option>
+  modifiers?: ModifiersMap<Modifier>
 ) => {
-  return (...classes: (ClassesObj<Slot, Option> | NotExisting)[]) => {
+  return (...classes: (ClassesObj<Slot, Modifier> | Nullish)[]) => {
     const slotsMapArray = classes
       .map(classesObj => classesObj && getSlotsMap(slotNames, classesObj, modifiers))
       .filter(Boolean) as SlotsMap<Slot>[]
@@ -30,10 +30,9 @@ const mergeSlotsMaps = <Slot extends string>(
   slotsMapArray: SlotsMap<Slot>[]
 ): SlotsMap<Slot> =>
   slotNames.reduce((acc, slot) => {
-    return {
-      ...acc,
-      [slot]: slotsMapArray.map(slotsMap => slotsMap[slot]).join(' '),
-    }
+    acc[slot] = slotsMapArray.map(slotsMap => slotsMap[slot]).join(' ')
+
+    return acc
   }, {} as SlotsMap<Slot>)
 
 const getSlotsMap = <Slot extends string, Modifier extends string>(
@@ -41,13 +40,11 @@ const getSlotsMap = <Slot extends string, Modifier extends string>(
   classes: ClassesObj<Slot, Modifier>,
   modifiers?: ModifiersMap<Modifier>
 ): SlotsMap<Slot> => {
-  return slotNames.reduce(
-    (acc, slot) => ({
-      ...acc,
-      [slot]: getClassNamesForSlot(slot, classes, modifiers),
-    }),
-    {} as SlotsMap<Slot>
-  )
+  return slotNames.reduce((acc, slot) => {
+    acc[slot] = getClassNamesForSlot(slot, classes, modifiers)
+
+    return acc
+  }, {} as SlotsMap<Slot>)
 }
 
 const getClassNamesForSlot = (
@@ -57,7 +54,7 @@ const getClassNamesForSlot = (
 ) => {
   const classNamesWithModifiers = modifiers
     ? Object.entries(modifiers).map(
-        ([option, value]) => !!value && classes[`${slot}${capitalize(option)}`]
+        ([modifier, value]) => !!value && classes[`${slot}${capitalize(modifier, true)}`]
       )
     : []
 

@@ -1,0 +1,25 @@
+import { Meta, Title, Subtitle, Description, Primary, Controls, Stories } from '@storybook/blocks';
+
+import * as TextFieldStories from "./text-field.stories";
+
+import * as InputStories from "../input/input.stories";
+
+<Meta of={TextFieldStories} />
+
+<Title />
+
+<Subtitle />
+
+<Description />
+
+<Primary />
+
+##### TextField specific props
+
+<Controls of={TextFieldStories.Primary} include={['message', 'label', 'classes']} />
+
+#### Input specific props
+
+<Controls of={InputStories.Primary} exclude={['classes']} />
+
+<Stories />

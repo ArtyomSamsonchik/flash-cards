@@ -1,108 +1,101 @@
 @use '../../styles/helpers' as *;
 
-@mixin button-styles {
+.root {
   cursor: pointer;
 
   height: em(36);
   padding: 0 em(28);
 
-  border: none;
+  text-align: center;
+
   border-radius: 4px;
-}
 
-.primary {
-  @include button-styles;
+  &Primary {
+    background-color: var(--color-accent-500);
 
-  background-color: var(--color-accent-500);
+    &:hover {
+      background-color: var(--color-accent-300);
+    }
 
-  &:hover {
-    background-color: var(--color-accent-300);
+    &:focus-visible,
+    &:active {
+      background-color: var(--color-accent-700);
+    }
+
+    &:disabled {
+      cursor: default;
+      color: var(--color-light-900);
+      background-color: var(--color-accent-900);
+    }
   }
 
-  &:focus-visible,
-  &:active {
-    background-color: var(--color-accent-700);
-  }
-
-  &:disabled {
-    cursor: default;
-    color: var(--color-light-900);
-    background-color: var(--color-accent-900);
-  }
-}
-
-.secondary {
-  @include button-styles;
-
-  background-color: var(--color-dark-300);
-
-  &:hover {
-    background-color: var(--color-dark-100);
-  }
-
-  &:focus-visible,
-  &:active {
-    background-color: var(--color-dark-500);
-  }
-
-  &:disabled {
-    cursor: default;
-    color: var(--color-light-900);
+  &Secondary {
     background-color: var(--color-dark-300);
-  }
-}
 
-.tertiary {
-  @include button-styles;
+    &:hover {
+      background-color: var(--color-dark-100);
+    }
 
-  color: var(--color-accent-500);
-  background-color: transparent;
-  border: 1px solid var(--color-accent-500);
+    &:focus-visible,
+    &:active {
+      background-color: var(--color-dark-500);
+    }
 
-  &:is(:hover, :active, :focus-visible) {
-    color: var(--color-accent-700);
-    border-color: var(--color-accent-700);
-  }
-
-  &:hover {
-    background-color: var(--color-dark-500);
+    &:disabled {
+      cursor: default;
+      color: var(--color-light-900);
+      background-color: var(--color-dark-300);
+    }
   }
 
-  &:focus-visible,
-  &:active {
-    background-color: var(--color-accent-900);
+  // TODO: set brighter bg and border colors to tertiary button on hover
+  &Tertiary {
+    color: var(--color-accent-500);
+    border: 1px solid var(--color-accent-500);
+
+    &:is(:hover, :active, :focus-visible) {
+      color: var(--color-accent-700);
+      border-color: var(--color-accent-700);
+    }
+
+    &:hover {
+      background-color: var(--color-dark-500);
+    }
+
+    &:focus-visible,
+    &:active {
+      background-color: var(--color-accent-900);
+    }
+
+    &:disabled {
+      cursor: default;
+      color: var(--color-accent-900);
+      background-color: transparent;
+      border-color: var(--color-accent-900);
+    }
   }
 
-  &:disabled {
-    cursor: default;
-    color: var(--color-accent-900);
+  &Link {
+    color: var(--color-accent-500);
     background-color: transparent;
-    border-color: var(--color-accent-900);
-  }
-}
+    border-radius: em(36);
 
-.link {
-  @include button-styles;
+    &:hover {
+      color: var(--color-accent-300);
+    }
 
-  color: var(--color-accent-500);
-  background-color: transparent;
-  border-radius: em(36);
+    &:focus-visible,
+    &:active {
+      color: var(--color-accent-700);
+    }
 
-  &:hover {
-    color: var(--color-accent-300);
-  }
-
-  &:focus-visible,
-  &:active {
-    color: var(--color-accent-700);
+    &:disabled {
+      cursor: default;
+      color: var(--color-accent-900);
+    }
   }
 
-  &:disabled {
-    cursor: default;
-    color: var(--color-accent-900);
+  &FullWidth {
+    width: 100%;
   }
-}
-
-.fullWidth {
-  width: 100%;
 }

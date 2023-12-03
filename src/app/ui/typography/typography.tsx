@@ -2,6 +2,7 @@ import {
   ComponentPropsWithoutRef,
   ElementRef,
   ElementType,
+  ReactElement,
   ReactNode,
   Ref,
   forwardRef,
@@ -34,7 +35,9 @@ export const TypographyRender = <T extends ElementType = 'p'>(
   )
 }
 
-export const Typography = forwardRef(TypographyRender) as typeof TypographyRender
+export const Typography = forwardRef(TypographyRender) as <T extends ElementType = 'p'>(
+  props: TypographyProps<T> & { ref?: Ref<ElementRef<T>> }
+) => ReactElement
 
 export const elementsMap: Record<TypographyVariant, string> = {
   body1: 'p',

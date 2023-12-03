@@ -1,0 +1,18 @@
+.container {
+  max-width: 420px;
+  padding: 24px 30px;
+}
+
+.header {
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .button {
+    background-color: red;
+  }
+}

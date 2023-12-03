@@ -1,0 +1,17 @@
+@use '@/app/styles/helpers' as *;
+@use '@/app/styles/mixins' as *;
+
+.button {
+  @include flex;
+
+  cursor: pointer;
+  aspect-ratio: 1;
+  height: 100%;
+  margin-right: -#{em(8)};
+}
+
+.closeIcon,
+.searchIcon {
+  width: em(20);
+  height: em(20);
+}

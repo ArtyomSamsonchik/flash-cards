@@ -2,6 +2,7 @@ import type { CheckboxProps as RadixCheckboxProps } from '@radix-ui/react-checkb
 
 import { forwardRef, useId } from 'react'
 
+import { ClassesObj } from '@/app/helpers/get-class-names'
 import { Typography } from '@/app/ui/typography'
 import { CheckedIcon } from '@/icons/checked-icon'
 import * as RadixCheckbox from '@radix-ui/react-checkbox'
@@ -9,8 +10,8 @@ import { clsx } from 'clsx'
 
 import s from './checkbox.module.scss'
 
-type CheckboxClassNames = 'icon' | 'indicator' | 'label' | 'root' | 'wrapper'
-export type CheckboxClasses = Record<CheckboxClassNames, string>
+type CheckboxSlot = 'icon' | 'indicator' | 'label' | 'root' | 'wrapper'
+export type CheckboxClasses = ClassesObj<CheckboxSlot>
 
 type OwnProps = {
   checked?: boolean
@@ -20,6 +21,7 @@ type OwnProps = {
 type CheckboxProps = OwnProps & Omit<RadixCheckboxProps, 'asChild' | keyof OwnProps>
 
 // TODO: enable default outline color when checkbox is focus-visible state
+// TODO: fix argType 'classes' description in storybook
 export const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(
   ({ classes = {}, label, ...props }, ref) => {
     const id = useId()
@@ -46,7 +48,7 @@ export const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(
 )
 
 const getClassNames = (classes: CheckboxClasses, checked?: boolean, disabled?: boolean) => {
-  const keys: CheckboxClassNames[] = ['root', 'wrapper', 'icon', 'indicator', 'label']
+  const keys: CheckboxSlot[] = ['root', 'wrapper', 'icon', 'indicator', 'label']
 
   return keys.reduce(
     (acc, key) => ({
