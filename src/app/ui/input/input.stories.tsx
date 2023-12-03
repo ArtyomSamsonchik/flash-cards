@@ -48,7 +48,6 @@ const meta = {
     endAdornment: inputAdornmentArgType,
 
     onValueChange: {
-      action: 'onValueChange',
       description: `Event handler called when the value changes.`,
       table: { type: { summary: '(value: string) => void' } },
     },

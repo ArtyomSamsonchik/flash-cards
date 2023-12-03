@@ -1,102 +1,30 @@
-.root {
-  width: 100%;
-}
+@use '@/app/styles/helpers' as *;
 
-.fieldContainer {
-  position: relative;
-  width: 100%;
-}
-
-.field {
-  display: inline-block;
-
-  width: 100%;
-  padding: 6px 12px;
-
-  line-height: 24px;
-  color: var(--color-light-100);
-
-  background: transparent;
-  border: 1px solid var(--color-dark-300);
-  border-radius: 2px;
-
-
-  &:hover {
-    background: var(--color-dark-700);
-  }
-
-  &:focus-visible {
-    border-color: var(--color-info-700);
-    outline: 1px solid var(--color-info-700);
-  }
-
-  &:disabled {
-    border-color: var(--color-dark-300);
-    outline: 1px solid var(--color-dark-300);
-
-    &:hover {
-      background: none;
-    }
-  }
-}
-
-.fieldWithSearch {
-  padding-left: 35px;
-}
-
-.error {
-  color: var(--color-danger-300);
-  border: 1px solid var(--color-danger-700);
-  border-color: var(--color-danger-300);
-
-  &::placeholder {
-    color: var(--color-danger-300);
-  }
-
-  &:focus-visible {
-    border-color: var(--color-danger-300);
-    outline: 1px solid var(--color-danger-300);
-  }
+%label {
+  margin-left: em(4);
 }
 
 .label {
-  margin-bottom: 1px;
+  @extend %label;
+
   color: var(--color-dark-100);
+
+  &Disabled {
+    color: var(--color-dark-300);
+  }
 }
 
-.disabledLabel {
-  color: var(--color-dark-300);
-}
+.message {
+  @extend %label;
 
-.showPassword,
-.showSearch {
-  cursor: pointer;
+  margin-block: em(4, 12);
+  color: var(--color-light-900);
 
-  position: absolute;
+  &Error {
+    color: var(--color-danger-300);
+  }
 
-  width: 20px;
-  height: 20px;
-  padding: 0;
-
-  background: transparent;
-  border: none;
-
-}
-
-.showPassword {
-  top: 50%;
-  right: 10px;
-  bottom: 50%;
-  transform: translateY(-50%);
-}
-
-.showSearch {
-  top: 23%;
-  left: 10px;
-}
-
-.errorLabel {
-  margin-bottom: 1px;
-  line-height: 0;
-  color: var(--color-danger-300);
+  &Disabled {
+    color: var(--color-dark-300);
+  }
 }
