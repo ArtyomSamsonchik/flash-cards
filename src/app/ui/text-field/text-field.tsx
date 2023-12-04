@@ -1,4 +1,4 @@
-import { ElementRef, forwardRef } from 'react'
+import { ElementRef, forwardRef, useId } from 'react'
 
 import getClassNames, { ClassesObj } from '@/app/helpers/get-class-names'
 import { Input, InputProps, InputSlot, InputSlotModifier } from '@/app/ui/input'
@@ -21,16 +21,17 @@ const textFieldSlots: TextFieldSlot[] = ['textFieldRoot', 'label', 'message', 'r
 
 export const TextField = forwardRef<ElementRef<'input'>, TextFieldProps>(
   ({ classes, disabled, error, label, message, ...props }, ref) => {
+    const id = useId()
     const cls = getClassNames(textFieldSlots, { disabled, error })(s, classes)
 
     return (
       <div className={cls.textFieldRoot}>
         {label && (
-          <Typography as={'span'} className={cls.label} variant={'body2'}>
+          <Typography as={'label'} className={cls.label} htmlFor={id} variant={'body2'}>
             {label}
           </Typography>
         )}
-        <Input classes={cls} disabled={disabled} error={error} ref={ref} {...props} />
+        <Input classes={cls} disabled={disabled} error={error} id={id} ref={ref} {...props} />
         {message && (
           <Typography as={'span'} className={cls.message} variant={'caption'}>
             {message}
