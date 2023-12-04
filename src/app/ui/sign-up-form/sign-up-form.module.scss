@@ -1,18 +1,44 @@
+@use '@/app/styles/mixins' as *;
+@use 'sass:selector';
+
 .container {
-  max-width: 420px;
-  padding: 24px 30px;
+  @include card-container($isFlex: true, $justify: null, $direction: column);
 }
 
-.header {
-  text-align: center;
+.title {
+  margin-bottom: 24px;
 }
 
 .form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  @include flex($justify: null, $direction: column);
 
-  .button {
-    background-color: red;
-  }
+  width: 100%;
+}
+
+.field {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.input {
+  @include reset-input-autofill(
+    $bg-color: var(--color-dark-700),
+    $text-color: var(--color-light-100),
+    $disabled-text-color: var(--color-dark-300)
+  );
+}
+
+.button {
+  margin-top: 24px;
+}
+
+.caption {
+  margin-top: 20px;
+  color: var(--color-light-900);
+}
+
+.link {
+  @include typography($size: m, $weight: bold, $line-height: m);
+
+  margin-top: 10px;
 }

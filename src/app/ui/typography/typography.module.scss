@@ -1,20 +1,5 @@
 @use '../../styles/helpers' as *;
-
-@mixin typography($size: null, $weight: null, $line-height: null) {
-  margin: 0;
-
-  @if $size {
-    font-size: var(--font-size-#{$size});
-  }
-
-  @if $weight {
-    font-weight: var(--font-weight-#{$weight});
-  }
-
-  @if $line-height {
-    line-height: var(--line-height-#{$line-height});
-  }
-}
+@use '../../styles/mixins' as *;
 
 .large {
   @include typography(xxl, bold);
@@ -60,8 +45,12 @@
 
 %link-shared {
   cursor: pointer;
-  color: var(--color-info-500);
+  color: var(--color-accent-500);
   text-decoration: underline;
+
+  &:hover {
+    color: var(--color-accent-300);
+  }
 }
 
 .link1 {
