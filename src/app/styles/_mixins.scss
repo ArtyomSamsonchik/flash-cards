@@ -63,7 +63,7 @@
     @include card-container($isFlex, $flex-args...);
   }
 
-  .header {
+  .title {
     margin-bottom: 24px;
   }
 
@@ -75,7 +75,7 @@
     @include flex($justify: null, $direction: column);
   }
 
-  .textFieldRoot {
+  .field {
     @if $isFlex {
       width: 100%;
     }

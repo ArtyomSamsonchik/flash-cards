@@ -41,7 +41,11 @@ export const PasswordField = forwardRef<ElementRef<'input'>, PasswordFieldProps>
         disabled={disabled}
         endAdornment={
           <InputAdornment position={'end'}>
-            <button className={cls.button} onClick={() => setShowPassword(prev => !prev)}>
+            <button
+              className={cls.button}
+              onClick={() => setShowPassword(prev => !prev)}
+              type={'button'}
+            >
               <Icon className={cls.icon} />
             </button>
           </InputAdornment>
