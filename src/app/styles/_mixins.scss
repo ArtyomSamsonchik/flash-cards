@@ -1,4 +1,4 @@
-@use 'sass:math';
+@use 'sass:selector';
 
 @mixin flex($justify: center, $align: center, $direction: null, $wrap: null) {
   display: flex;
@@ -20,5 +20,95 @@
 
   @if $line-height {
     line-height: var(--line-height-#{$line-height});
+  }
+}
+
+@mixin card-container($isFlex: false, $flex-args...) {
+  max-width: 420px;
+  padding: 30px;
+
+  @if $isFlex {
+    @include flex($flex-args...);
+  }
+}
+
+// Code used to reset user-agent styles applied to input with auto inserted credentials
+@mixin reset-input-autofill(
+  $bg-color,
+  $text-color,
+  $disabled-bg-color: $bg-color,
+  $disabled-text-color: $text-color
+) {
+  $parent: selector.append(&, ':-webkit-autofill');
+  $parent-disabled: selector.append(&, 'Disabled:-webkit-autofill');
+
+  --text-color: #{$text-color};
+  --bg-color: #{$bg-color};
+
+  // prettier-ignore
+  @at-root #{$parent, selector.append($parent, ':hover, :focus, :active')} {
+    box-shadow: 0 0 0 4em var(--bg-color) inset !important;
+
+    -webkit-text-fill-color: var(--text-color) !important;
+  }
+
+  @at-root #{$parent-disabled} {
+    --text-color: #{$disabled-text-color};
+    --bg-color: #{$disabled-bg-color};
+  }
+}
+
+@mixin form-card($isFlex: false, $flex-args...) {
+  .container {
+    @include card-container($isFlex, $flex-args...);
+  }
+
+  .header {
+    margin-bottom: 24px;
+  }
+
+  .form {
+    @if $isFlex {
+      width: 100%;
+    }
+
+    @include flex($justify: null, $direction: column);
+  }
+
+  .textFieldRoot {
+    @if $isFlex {
+      width: 100%;
+    }
+
+    margin-bottom: 10px;
+  }
+
+  %reset-autofill-temp {
+    box-shadow: 0 0 0 4em var(--bg-color) inset !important;
+
+    -webkit-text-fill-color: var(--text-color) !important;
+  }
+
+  .input {
+    @include reset-input-autofill(
+      $bg-color: var(--color-dark-700),
+      $text-color: var(--color-light-100),
+      $disabled-text-color: var(--color-dark-300)
+    );
+  }
+
+  .button {
+    margin-top: 24px;
+  }
+
+  .caption {
+    margin-top: 20px;
+    color: var(--color-light-900);
+  }
+
+  .link {
+    @include typography($size: m, $weight: bold, $line-height: m);
+
+    margin-top: 10px;
   }
 }
