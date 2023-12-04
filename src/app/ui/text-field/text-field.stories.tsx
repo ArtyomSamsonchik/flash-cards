@@ -30,7 +30,9 @@ const meta = {
     },
     message: {
       description: `Message element is used to provide feedback to the user,
-        such as an error message. `,
+        such as an error message. Provide a space character to preserve a message slot and its layout
+        to avoid shifting the layout after the message appears.
+        `,
       table: { type: { summary: 'string ' } },
     },
     ...InputStories.default.argTypes,

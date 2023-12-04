@@ -25,13 +25,17 @@ export const TextField = forwardRef<ElementRef<'input'>, TextFieldProps>(
 
     return (
       <div className={cls.textFieldRoot}>
-        <Typography as={'span'} className={cls.label} variant={'body2'}>
-          {label}
-        </Typography>
+        {label && (
+          <Typography as={'span'} className={cls.label} variant={'body2'}>
+            {label}
+          </Typography>
+        )}
         <Input classes={cls} disabled={disabled} error={error} ref={ref} {...props} />
-        <Typography as={'span'} className={cls.message} variant={'caption'}>
-          {message}
-        </Typography>
+        {message && (
+          <Typography as={'span'} className={cls.message} variant={'caption'}>
+            {message}
+          </Typography>
+        )}
       </div>
     )
   }
