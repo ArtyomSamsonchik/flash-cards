@@ -1,41 +1,45 @@
 import type { CheckboxProps as RadixCheckboxProps } from '@radix-ui/react-checkbox'
 
-import { forwardRef, useId } from 'react'
+import { ReactElement, forwardRef, useId } from 'react'
 
-import { ClassesObj } from '@/app/helpers/get-class-names'
+import getClassNames, { ClassesObj } from '@/app/helpers/get-class-names'
 import { Typography } from '@/app/ui/typography'
 import { CheckedIcon } from '@/icons/checked-icon'
+import { UncheckedIcon } from '@/icons/unchecked-icon'
 import * as RadixCheckbox from '@radix-ui/react-checkbox'
-import { clsx } from 'clsx'
 
 import s from './checkbox.module.scss'
 
-type CheckboxSlot = 'icon' | 'indicator' | 'label' | 'root' | 'wrapper'
+type CheckboxSlot = 'indicator' | 'label' | 'root' | 'unchecked' | 'wrapper'
 export type CheckboxClasses = ClassesObj<CheckboxSlot>
 
 type OwnProps = {
   checked?: boolean
+  checkedIcon?: ReactElement
   classes?: CheckboxClasses
+  icon?: ReactElement
   label?: string
+  onCheckedChange?: (checked: boolean) => void
 }
 type CheckboxProps = OwnProps & Omit<RadixCheckboxProps, 'asChild' | keyof OwnProps>
 
-// TODO: enable default outline color when checkbox is focus-visible state
-// TODO: fix argType 'classes' description in storybook
 export const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(
-  ({ classes = {}, label, ...props }, ref) => {
+  ({ checkedIcon = <CheckedIcon />, classes, icon = <UncheckedIcon />, label, ...props }, ref) => {
     const id = useId()
 
-    const cls = getClassNames(classes as CheckboxClasses)
+    const cls = getClassNames([
+      'root',
+      'wrapper',
+      'unchecked',
+      'indicator',
+      'label',
+    ] as CheckboxSlot[])(s, classes)
 
     return (
       <div className={cls.wrapper}>
         <RadixCheckbox.Root className={cls.root} id={id} ref={ref} {...props}>
-          <span className={s.indicatorWrapper}>
-            <RadixCheckbox.Indicator className={cls.indicator}>
-              <CheckedIcon />
-            </RadixCheckbox.Indicator>
-          </span>
+          <span className={cls.unchecked}>{icon}</span>
+          <RadixCheckbox.Indicator className={cls.indicator}>{checkedIcon}</RadixCheckbox.Indicator>
         </RadixCheckbox.Root>
         {label && (
           <Typography as={'label'} className={cls.label} htmlFor={id} variant={'body2'}>
@@ -46,20 +50,3 @@ export const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(
     )
   }
 )
-
-const getClassNames = (classes: CheckboxClasses, checked?: boolean, disabled?: boolean) => {
-  const keys: CheckboxSlot[] = ['root', 'wrapper', 'icon', 'indicator', 'label']
-
-  return keys.reduce(
-    (acc, key) => ({
-      ...acc,
-      [key]: clsx(
-        s[key],
-        checked && s[`${key}Checked`],
-        disabled && s[`${key}Disabled`],
-        classes[key]
-      ),
-    }),
-    {} as CheckboxClasses
-  )
-}
