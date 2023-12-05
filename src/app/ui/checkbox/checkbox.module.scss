@@ -6,6 +6,7 @@
   align-items: center;
 }
 
+// TODO: disable :active pseudo class styles on touch devices for checkbox, radio etc.
 .root {
   @include flex;
 

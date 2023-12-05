@@ -23,6 +23,8 @@
   }
 }
 
+// TODO: add sass:map helper-function call to avoid an error when passing named args
+// https://sass-lang.com/documentation/at-rules/mixin/#taking-arbitrary-keyword-arguments
 @mixin card-container($isFlex: false, $flex-args...) {
   max-width: 420px;
   padding: 30px;
@@ -106,7 +108,7 @@
     color: var(--color-light-900);
   }
 
-  .link {
+  .signUpLink {
     @include typography($size: m, $weight: bold, $line-height: m);
 
     margin-top: 10px;
