@@ -3,7 +3,6 @@
 
 .itemWrapper {
   display: inline-flex;
-  gap: em(8);
   align-items: center;
 }
 
@@ -12,18 +11,11 @@
 
   cursor: pointer;
 
-  position: relative;
-
-  align-items: center;
-
   width: em(36);
   height: em(36);
-  padding: 0;
 
   color: var(--color-accent-500);
 
-  background-color: transparent;
-  border: none;
   border-radius: 50%;
 
   &:hover {
@@ -42,23 +34,9 @@
   }
 }
 
-%icon-temp {
+%icon-wrapper-temp {
   width: em(24);
   height: em(24);
-}
-
-.uncheckedIcon {
-  @extend %icon-temp;
-
-  [data-state='checked'] > & {
-    display: none;
-  }
-}
-
-.indicator {
-  @extend %icon-temp;
-
-  position: absolute;
 
   svg {
     width: 100%;
@@ -66,8 +44,21 @@
   }
 }
 
+.unchecked {
+  @extend %icon-wrapper-temp;
+
+  [data-state='checked'] > & {
+    display: none;
+  }
+}
+
+.indicator {
+  @extend %icon-wrapper-temp;
+}
+
 .label {
   cursor: pointer;
+  margin-left: em(8);
 
   [data-disabled] + & {
     pointer-events: none;

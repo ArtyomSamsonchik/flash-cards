@@ -2,7 +2,7 @@
 
 .root {
   display: flex;
-  gap: 12px;
+  gap: em(12);
 
   &[data-orientation='horizontal'] {
     flex-direction: row;
