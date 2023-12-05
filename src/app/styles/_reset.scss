@@ -25,7 +25,7 @@ option {
   color: inherit;
 }
 
-a:visited {
+:where(a:visited) {
   color: inherit;
 }
 

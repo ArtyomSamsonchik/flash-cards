@@ -19,7 +19,7 @@ const textFieldClasses =
 
 /**
  * TextField element based on common [Input](?path=/docs/components-input--docs) element.
- * Almost all Input props are supported.
+ * Almost all [Input props](#input-specific-props) are supported.
  * */
 const meta = {
   argTypes: {

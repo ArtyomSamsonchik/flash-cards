@@ -1,13 +1,17 @@
+import { ReactElement, createElement } from 'react'
+
+import { CheckedIcon } from '@/icons/checked-icon'
+import { EyeIcon } from '@/icons/eye-icon'
+import { EyeOffIcon } from '@/icons/eye-off-icon'
+import { RadioCheckedIcon } from '@/icons/radio-checked-icon'
+import { RadioUncheckedIcon } from '@/icons/radio-unchecked-icon'
+import { UncheckedIcon } from '@/icons/unchecked-icon'
 import { Meta, StoryObj } from '@storybook/react'
 
 import { RadioGroup, RadioGroupClasses } from './radio-group'
-import { RadioItem } from './slots/radio-group-item'
+import { RadioItemOption } from './slots/radio-group-item'
 
-const radioItemTypeExample = {
-  'disabled?': 'string',
-  'label?': 'string',
-  value: 'string',
-}
+const radioItemOption = { 'disabled?': 'string', 'label?': 'string', value: 'string' }
 
 const radioGroupClasses: RadioGroupClasses = {
   indicator: 'string',
@@ -15,10 +19,31 @@ const radioGroupClasses: RadioGroupClasses = {
   itemWrapper: 'string',
   label: 'string',
   root: 'string',
+  unchecked: 'string',
 }
 
+const selectOptions = ['checkbox icon', 'eye icon', 'default']
+const customIcons = {
+  checked: [CheckedIcon, EyeIcon, RadioCheckedIcon],
+  unchecked: [UncheckedIcon, EyeOffIcon, RadioUncheckedIcon],
+}
+const getIcons = (state: 'checked' | 'unchecked'): Record<string, ReactElement> =>
+  Object.fromEntries(selectOptions.map((o, i) => [o, createElement(customIcons[state][i])]))
+
+/**
+ * A RadioGroup wraps around a list of RadioGroupItem elements
+ * */
 const meta = {
   argTypes: {
+    checkedIcon: {
+      description: `An optional react element that will replace the default icon in the checked state.
+        It is expected that the svg element will be utilized.\t
+        This prop is provided to each RadioGroupItem element.`,
+      mapping: getIcons('checked'),
+      options: selectOptions,
+      table: { defaultValue: { summary: null }, type: { summary: 'ReactElement' } },
+    },
+
     classes: {
       description: `An object containing the names of the classes corresponding to the
       component slots. Provided classnames wil be merged with default slots classnames.`,
@@ -40,6 +65,15 @@ const meta = {
 
     disabled: { table: { type: { summary: 'boolean' } } },
 
+    icon: {
+      description: `An optional react element that will replace the default icon in an unchecked state.
+        It is expected that the svg element will be utilized.\t
+        This prop is provided to each RadioGroupItem element.`,
+      mapping: getIcons('unchecked'),
+      options: selectOptions,
+      table: { defaultValue: { summary: null }, type: { summary: 'ReactElement' } },
+    },
+
     name: {
       description: `The name of the group.
         Submitted with its owning form as part of a name/value pair.`,
@@ -52,9 +86,12 @@ const meta = {
     },
 
     options: {
-      description: `Array of RadioItem objects to map over`,
+      description: `Array of RadioItemOption objects to map over`,
       table: {
-        type: { detail: JSON.stringify(radioItemTypeExample, null, 2), summary: 'RadioItem' },
+        type: {
+          detail: JSON.stringify(radioItemOption, null, 2),
+          summary: 'RadioItemOptions[]',
+        },
       },
     },
 
@@ -75,13 +112,12 @@ const meta = {
     },
   },
 
-  args: { disabled: false, orientation: 'vertical' },
   component: RadioGroup,
   tags: ['autodocs'],
   title: 'Components/RadioGroup',
 } satisfies Meta<typeof RadioGroup>
 
-const options: RadioItem[] = [
+const options: RadioItemOption[] = [
   { label: 'first item', value: '1' },
   { label: 'second item', value: '2' },
   { disabled: true, label: 'third item', value: '3' },
@@ -91,9 +127,11 @@ const options: RadioItem[] = [
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {
+export const Primary: Story = {
   args: {
     defaultValue: '1',
+    disabled: false,
     options,
+    orientation: 'vertical',
   },
 }

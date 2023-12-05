@@ -1,4 +1,4 @@
-import { forwardRef, useId } from 'react'
+import { ReactElement, forwardRef, useId } from 'react'
 
 import getClassNames, { ClassesObj } from '@/app/helpers/get-class-names'
 import { Typography } from '@/app/ui/typography'
@@ -8,31 +8,37 @@ import * as RadixRadioGroup from '@radix-ui/react-radio-group'
 
 import s from './radio-group-item.module.scss'
 
-export type RadioItemSlot = 'indicator' | 'item' | 'itemWrapper' | 'label'
+export type RadioItemSlot = 'indicator' | 'item' | 'itemWrapper' | 'label' | 'unchecked'
 export type RadioItemClasses = ClassesObj<RadioItemSlot>
 
-export type RadioItem = { disabled?: boolean; label?: string; value: string }
+export type RadioItemOption = { disabled?: boolean; label?: string; value: string }
 type RadioItemProps = {
+  checkedIcon?: ReactElement
   classes?: RadioItemClasses
-} & RadioItem
+  icon?: ReactElement
+} & RadioItemOption
 
 // TODO: check all polymorphic components to correct handle refs
-// TODO: maybe refactor checkbox. Replace outline with icon putted before indicator slot like in radio item
-// TODO: read about ref types for radio item and checkbox. It can replaced with input inside forms!
 export const RadioGroupItem = forwardRef<HTMLButtonElement, RadioItemProps>(
-  ({ classes, label, ...props }, ref) => {
+  (
+    { checkedIcon = <RadioCheckedIcon />, classes, icon = <RadioUncheckedIcon />, label, ...props },
+    ref
+  ) => {
     const id = useId()
-    const cls = getClassNames<RadioItemSlot>(['itemWrapper', 'item', 'indicator', 'label'])(
-      s,
-      classes
-    )
+    const cls = getClassNames<RadioItemSlot>([
+      'itemWrapper',
+      'item',
+      'unchecked',
+      'indicator',
+      'label',
+    ])(s, classes)
 
     return (
       <div className={cls.itemWrapper}>
         <RadixRadioGroup.Item className={cls.item} id={id} ref={ref} {...props}>
-          <RadioUncheckedIcon className={s.uncheckedIcon} />
+          <span className={cls.unchecked}>{icon}</span>
           <RadixRadioGroup.Indicator className={cls.indicator}>
-            <RadioCheckedIcon />
+            {checkedIcon}
           </RadixRadioGroup.Indicator>
         </RadixRadioGroup.Item>
         {label && (
