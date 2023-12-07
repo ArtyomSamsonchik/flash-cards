@@ -38,6 +38,8 @@
 }
 
 .recoveryLink {
+  cursor: pointer;
+
   align-self: flex-end;
 
   margin-top: 6px;
@@ -55,7 +57,7 @@
   margin-top: 48px;
 }
 
-.caption {
+.hint {
   margin-top: 20px;
   color: var(--color-light-900);
 }

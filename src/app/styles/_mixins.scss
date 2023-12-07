@@ -35,6 +35,7 @@
 }
 
 // Code used to reset user-agent styles applied to input with auto inserted credentials
+// Mixin must be used inside a ruleset, not at the top level of the stylesheet.
 @mixin reset-input-autofill(
   $bg-color,
   $text-color,
@@ -85,12 +86,6 @@
     margin-bottom: 10px;
   }
 
-  %reset-autofill-temp {
-    box-shadow: 0 0 0 4em var(--bg-color) inset !important;
-
-    -webkit-text-fill-color: var(--text-color) !important;
-  }
-
   .input {
     @include reset-input-autofill(
       $bg-color: var(--color-dark-700),
@@ -103,7 +98,7 @@
     margin-top: 24px;
   }
 
-  .caption {
+  .hint {
     margin-top: 20px;
     color: var(--color-light-900);
   }

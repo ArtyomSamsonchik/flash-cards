@@ -20,8 +20,10 @@ const meta = {
     },
     onSubmitError: {
       control: false,
-      description: `Errors that occurred during the call of the onSubmit function will not be caught.
-        Instead, use try/catch inside the onSubmit handler..`,
+      description: `This function will be called when a form validation fails instead of the onSubmit handler.
+        It will receive an object containing validation errors.
+        Errors that occurred during the call of the onSubmit function will not be caught.
+        Instead, use try/catch inside the onSubmit handler.`,
       table: {
         type: {
           detail:
@@ -43,7 +45,7 @@ type Story = StoryObj<typeof meta>
 
 export const Empty: Story = {}
 
-export const SubmitCorrectData: Story = {
+export const SubmitWithValidData: Story = {
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement)
 
