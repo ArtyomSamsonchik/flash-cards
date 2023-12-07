@@ -2,7 +2,7 @@ import { expect } from '@storybook/jest'
 import { Meta, StoryObj } from '@storybook/react'
 import { userEvent, waitFor, within } from '@storybook/testing-library'
 
-import { SignInForm } from './sign-in-form'
+import { RecoverPassword } from './recover-password'
 
 const meta = {
   argTypes: {
@@ -12,9 +12,9 @@ const meta = {
       table: {
         type: {
           detail:
-            `(\n  data: SignInFormValues,\n  event?: BaseSyntheticEvent\n) => unknown | Promise<unknown>` +
-            '\n\nSignInFormValuesKeys = "email" | "password" | "rememberMe"',
-          summary: 'SubmitHandler<SignInFormValues>',
+            `(\n  data: RecoverPasswordFormValues,\n  event?: BaseSyntheticEvent\n) => unknown | Promise<unknown>` +
+            '\n\nRecoverPasswordFormKeys = "email"',
+          summary: 'SubmitHandler<RecoverPasswordFormValues>',
         },
       },
     },
@@ -27,18 +27,18 @@ const meta = {
       table: {
         type: {
           detail:
-            `(\n  errors: FieldErrors<SignInFormValues>,\n  event?: BaseSyntheticEvent\n) => unknown | Promise<unknown>` +
-            '\n\nSignInFormValuesKeys = "email" | "password" | "rememberMe"',
-          summary: 'SubmitErrorHandler<SignInFormValues>',
+            `(\n  errors: FieldErrors<RecoverPasswordFormValues>,\n  event?: BaseSyntheticEvent\n) => unknown | Promise<unknown>` +
+            '\n\nRecoverPasswordFormKeys = "email"',
+          summary: 'SubmitErrorHandler<RecoverPasswordFormValues>',
         },
       },
     },
   },
 
-  component: SignInForm,
+  component: RecoverPassword,
   tags: ['autodocs'],
-  title: 'Components/SignInForm',
-} satisfies Meta<typeof SignInForm>
+  title: 'Components/RecoverPassword',
+} satisfies Meta<typeof RecoverPassword>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -50,10 +50,7 @@ export const SubmitWithValidData: Story = {
     const canvas = within(canvasElement)
 
     await userEvent.type(canvas.getByLabelText('Email'), 'test@test.com')
-    await userEvent.type(canvas.getByLabelText('Password'), 'qw1er2t3')
-    await userEvent.click(canvas.getByRole('checkbox'))
-
-    await userEvent.click(canvas.getByRole('button', { name: /sign in/i }))
+    await userEvent.click(canvas.getByRole('button', { name: /send instructions/i }))
 
     await waitFor(() => expect(args.onSubmit).toHaveBeenCalled())
   },
