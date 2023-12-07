@@ -7,22 +7,13 @@ import { Checkbox } from '@/app/ui/checkbox'
 import { PasswordField } from '@/app/ui/password-field'
 import { TextField, TextFieldClasses } from '@/app/ui/text-field'
 import { Typography } from '@/app/ui/typography'
+import { signIn as signInSchema } from '@/app/validation-schemas'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { clsx } from 'clsx'
 import { z } from 'zod'
 
 import s from './sign-in-form.module.scss'
-
-// TODO: extract validation schemas from sign up and sign in forms to separate file
-const signInSchema = z.object({
-  email: z.string().trim().email('Invalid email'),
-  password: z
-    .string()
-    .min(3, 'Password must contain at least 3 character(s)')
-    .max(30, 'Password must contain at most 30 character(s)'),
-  rememberMe: z.boolean().optional(),
-})
 
 const getFieldClasses = (last = false): TextFieldClasses => ({
   input: s.input,

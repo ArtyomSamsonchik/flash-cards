@@ -6,27 +6,12 @@ import { Card } from '@/app/ui/card'
 import { PasswordField } from '@/app/ui/password-field'
 import { TextField, TextFieldClasses } from '@/app/ui/text-field'
 import { Typography } from '@/app/ui/typography'
+import { signUp as signUpSchema } from '@/app/validation-schemas'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import s from './sign-up-form.module.scss'
-
-const passwordSchema = z
-  .string()
-  .min(3, 'Password must contain at least 3 character(s)')
-  .max(30, 'Password must contain at most 30 character(s)')
-
-const signUpSchema = z
-  .object({
-    confirmPassword: passwordSchema,
-    email: z.string().trim().email('Invalid email'),
-    password: passwordSchema,
-  })
-  .refine(data => data.password === data.confirmPassword, {
-    message: 'The passwords do not match',
-    path: ['confirmPassword'],
-  })
 
 type FormValues = z.infer<typeof signUpSchema>
 
