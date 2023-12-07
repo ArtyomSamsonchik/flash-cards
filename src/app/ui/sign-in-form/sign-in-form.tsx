@@ -87,7 +87,7 @@ export const SignInForm: FC<SignInFormProps> = ({ onSubmit, onSubmitError }) => 
         <Button classes={{ root: s.button }} disabled={isSubmitting} fullWidth type={'submit'}>
           Sign In
         </Button>
-        <Typography className={s.caption} variant={'body2'}>
+        <Typography className={s.hint} variant={'body2'}>
           Don&apos;t have an account?
         </Typography>
         <Typography className={s.signUpLink} variant={'link1'}>
