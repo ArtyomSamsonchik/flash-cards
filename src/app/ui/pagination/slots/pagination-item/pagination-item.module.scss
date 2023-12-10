@@ -1,0 +1,51 @@
+@use '@/app/styles/mixins' as *;
+@use '@/app/styles/helpers' as *;
+
+%pagination-item-temp {
+  @include flex;
+
+  min-width: em(32);
+  height: em(32);
+  padding-inline: em(6);
+  border-radius: 3px;
+}
+
+.separator {
+  @extend %pagination-item-temp;
+
+  &Disabled {
+    color: var(--color-dark-100);
+  }
+}
+
+.page,
+.previous,
+.next {
+  @extend %pagination-item-temp;
+
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--color-dark-500);
+  }
+
+  // TODO: remove nextSelected and prevSelected
+  &Selected {
+    color: var(--color-dark-900);
+    background-color: var(--color-light-100);
+
+    &:hover {
+      background-color: var(--color-light-100);
+    }
+  }
+
+  &Disabled {
+    cursor: default;
+    color: var(--color-dark-100);
+    background-color: transparent;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+}

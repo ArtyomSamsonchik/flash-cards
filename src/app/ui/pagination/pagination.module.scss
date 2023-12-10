@@ -1,0 +1,16 @@
+@use '@/app/styles/mixins' as *;
+@use '@/app/styles/helpers' as *;
+@use 'sass:selector';
+
+.list {
+  @include flex($justify: null, $wrap: wrap);
+
+  gap: em(6);
+  margin: 0;
+  padding: 0;
+
+  &,
+  li {
+    list-style: none;
+  }
+}
