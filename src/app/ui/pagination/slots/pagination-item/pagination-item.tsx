@@ -1,13 +1,14 @@
 import { FC } from 'react'
 
 import getClassNames, { ClassesObj } from '@/app/helpers/get-class-names'
+import {
+  PaginationItemData,
+  PaginationItemType,
+} from '@/app/ui/pagination/helpers/use-pagination-items'
 
 import s from './pagination-item.module.scss'
 
-export type PaginationItemSlot = 'next' | 'page' | 'previous' | 'separator'
-type PaginationItemClasses = ClassesObj<PaginationItemSlot, 'disabled'>
-
-export type PaginationItemData = { page: number; type: PaginationItemSlot }
+type PaginationItemClasses = ClassesObj<PaginationItemType, 'disabled'>
 
 export type PaginationItemProps = {
   classes?: PaginationItemClasses
@@ -24,10 +25,10 @@ export const PaginationItem: FC<PaginationItemProps> = props => {
   return <li>{itemSlotRenderMap[props.item.type](props)}</li>
 }
 
-const itemSlotRenderMap: Record<PaginationItemSlot, FC<PaginationItemProps>> = {
+const itemSlotRenderMap: Record<PaginationItemType, FC<PaginationItemProps>> = {
   next: ({ classes, currentPage, disabled, item, onPageChange, pageCount }) => {
     const isDisabled = disabled || currentPage >= pageCount
-    const cls = getClassNames<PaginationItemSlot>([item.type], {
+    const cls = getClassNames<PaginationItemType>([item.type], {
       disabled: isDisabled,
     })(s, classes)
 
@@ -42,25 +43,23 @@ const itemSlotRenderMap: Record<PaginationItemSlot, FC<PaginationItemProps>> = {
       </button>
     )
   },
+
   page: ({ classes, currentPage, disabled, item, onPageChange }) => {
-    const cls = getClassNames<PaginationItemSlot>([item.type], {
+    const cls = getClassNames<PaginationItemType>([item.type], {
       disabled,
       selected: item.page === currentPage,
     })(s, classes)
 
     return (
-      <button
-        className={cls.page}
-        disabled={disabled}
-        onClick={() => onPageChange(Number(item.page))}
-      >
+      <button className={cls.page} disabled={disabled} onClick={() => onPageChange(item.page)}>
         {item.page}
       </button>
     )
   },
+
   previous: ({ classes, currentPage, disabled, item, onPageChange }) => {
     const isDisabled = disabled || currentPage <= 1
-    const cls = getClassNames<PaginationItemSlot>([item.type], { disabled: isDisabled })(s, classes)
+    const cls = getClassNames<PaginationItemType>([item.type], { disabled: isDisabled })(s, classes)
 
     return (
       <button
@@ -72,8 +71,9 @@ const itemSlotRenderMap: Record<PaginationItemSlot, FC<PaginationItemProps>> = {
       </button>
     )
   },
+
   separator: ({ classes, disabled, item }) => {
-    const cls = getClassNames<PaginationItemSlot>([item.type], { disabled })(s, classes)
+    const cls = getClassNames<PaginationItemType>([item.type], { disabled })(s, classes)
 
     return <div className={cls.separator}>...</div>
   },
