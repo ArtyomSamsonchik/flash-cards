@@ -1,3 +1,10 @@
+import { ComponentProps, ReactElement } from 'react'
+
+import { Button } from '@/app/ui/button'
+import { PaginationItem, PaginationItemProps } from '@/app/ui/pagination/slots/pagination-item'
+import { CloseIcon } from '@/icons/close-icon'
+import { RadioUncheckedIcon } from '@/icons/radio-unchecked-icon'
+import { UncheckedIcon } from '@/icons/unchecked-icon'
 import { Meta, StoryObj } from '@storybook/react'
 
 import { Pagination, PaginationClasses } from './pagination'
@@ -95,5 +102,88 @@ export const Primary: Story = {
     hidePrevButton: false,
     pageCount: 10,
     siblingCount: 1,
+  },
+}
+
+export const Short: Story = {
+  args: {
+    ...Primary.args,
+    pageCount: 3,
+  },
+}
+
+const iconsMap = {
+  'checkbox icon': <UncheckedIcon />,
+  'close icon': <CloseIcon />,
+  'radio icon': <RadioUncheckedIcon />,
+}
+
+export const CustomIcons: StoryObj<
+  ComponentProps<typeof Pagination> & {
+    buttonsIcon: ReactElement
+    separatorIcon: ReactElement
+  }
+> = {
+  argTypes: {
+    buttonsIcon: {
+      control: 'select',
+      mapping: iconsMap,
+      options: Object.keys(iconsMap),
+    },
+    separatorIcon: {
+      control: 'select',
+      mapping: iconsMap,
+      options: Object.keys(iconsMap),
+    },
+  },
+  args: Primary.args,
+  render: ({ buttonsIcon, separatorIcon, ...props }) => (
+    <Pagination
+      {...props}
+      renderItem={itemProps => (
+        <PaginationItem
+          {...itemProps}
+          iconsMap={{
+            next: buttonsIcon,
+            previous: buttonsIcon,
+            separator: separatorIcon,
+          }}
+        />
+      )}
+    />
+  ),
+}
+
+export const CustomControls: Story = {
+  args: {
+    ...Primary.args,
+    renderItem: props => {
+      const getButtonProps = ({
+        currentPage,
+        item,
+        onPageChange,
+        pageCount,
+      }: PaginationItemProps) => {
+        const props = {
+          next: {
+            children: '>',
+            disabled: currentPage === pageCount,
+            onClick: () => onPageChange(currentPage + 1),
+          },
+          previous: {
+            children: '<',
+            disabled: currentPage === 1,
+            onClick: () => onPageChange(currentPage - 1),
+          },
+        }
+
+        if (item.type === 'next' || item.type === 'previous') {
+          return props[item.type]
+        }
+      }
+      const buttonProps = getButtonProps(props)
+
+      return buttonProps ? <Button {...buttonProps} /> : <PaginationItem {...props} />
+    },
   },
 }
