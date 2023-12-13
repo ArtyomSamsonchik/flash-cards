@@ -8,6 +8,11 @@
   height: em(32);
   padding-inline: em(6);
   border-radius: 3px;
+
+  svg {
+    width: em(20);
+    height: em(20);
+  }
 }
 
 .separator {
