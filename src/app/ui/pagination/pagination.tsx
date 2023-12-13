@@ -13,7 +13,7 @@ import {
 import s from './pagination.module.scss'
 
 type PaginationSlot = 'list' | PaginationItemType
-type PaginationClasses = ClassesObj<PaginationSlot, 'disabled'>
+export type PaginationClasses = ClassesObj<PaginationSlot, 'disabled'>
 
 type PaginationProps = {
   classes?: PaginationClasses
