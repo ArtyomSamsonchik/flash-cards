@@ -18,6 +18,8 @@
   }
 }
 
+$selected-page: null;
+
 .page,
 .previous,
 .next {
@@ -29,13 +31,19 @@
     background-color: var(--color-dark-500);
   }
 
-  // TODO: remove nextSelected and prevSelected
-  &Selected {
-    color: var(--color-dark-900);
-    background-color: var(--color-light-100);
+  // add Selected modifier to the .page selector only
+  @each $selector in & {
+    @if #{$selector} == '.page' {
+      $selected-page: #{$selector}Selected !global;
 
-    &:hover {
-      background-color: var(--color-light-100);
+      @at-root #{$selected-page} {
+        color: var(--color-dark-900);
+        background-color: var(--color-light-100);
+
+        &:hover {
+          background-color: var(--color-light-100);
+        }
+      }
     }
   }
 
