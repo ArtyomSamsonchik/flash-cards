@@ -1,4 +1,5 @@
 @use 'sass:selector';
+@use 'sass:list';
 
 @mixin flex($justify: center, $align: center, $direction: null, $wrap: null) {
   display: flex;
@@ -23,17 +24,23 @@
   }
 }
 
-// TODO: add sass:map helper-function call to avoid an error when passing named args
-// https://sass-lang.com/documentation/at-rules/mixin/#taking-arbitrary-keyword-arguments
-@mixin card-container($isFlex: false, $flex-args...) {
+@mixin card-container(
+  $isFlex: false,
+  $justify: center,
+  $align: center,
+  $direction: null,
+  $wrap: null
+) {
   max-width: 420px;
   padding: 30px;
 
   @if $isFlex {
-    @include flex($flex-args...);
+    @include flex($justify, $align, $direction, $wrap);
   }
 }
 
+// TODO: add an error throwing statement if parent selector is null
+// https://sass-lang.com/documentation/style-rules/parent-selector/#in-sass-script
 // Code used to reset user-agent styles applied to input with auto inserted credentials
 // Mixin must be used inside a ruleset, not at the top level of the stylesheet.
 @mixin reset-input-autofill(
@@ -61,24 +68,36 @@
   }
 }
 
-@mixin form-card($isFlex: false, $flex-args...) {
-  .container {
-    @include card-container($isFlex, $flex-args...);
+$all-form-items: container, title, form, field, input, caption, button, hint, link;
+
+@mixin form-card($isFlex: true, $items: ()) {
+  @each $item in $items {
+    @if not list.index($all-form-items, $item) {
+      @error "#{$item} item is not supported by mixin. List of supported items: #{$all-form-items}";
+    }
+
+    .#{$item} {
+      @extend %#{$item} !optional;
+    }
   }
 
-  .title {
+  %container {
+    @include card-container($isFlex, $justify: null, $direction: column);
+  }
+
+  %title {
     margin-bottom: 24px;
   }
 
-  .form {
+  %form {
     @if $isFlex {
+      @include flex($justify: null, $direction: column);
+
       width: 100%;
     }
-
-    @include flex($justify: null, $direction: column);
   }
 
-  .field {
+  %field {
     @if $isFlex {
       width: 100%;
     }
@@ -86,7 +105,7 @@
     margin-bottom: 10px;
   }
 
-  .input {
+  %input {
     @include reset-input-autofill(
       $bg-color: var(--color-dark-700),
       $text-color: var(--color-light-100),
@@ -94,16 +113,21 @@
     );
   }
 
-  .button {
+  %caption {
+    margin-inline: 2px;
+    color: var(--color-light-900);
+  }
+
+  %button {
     margin-top: 24px;
   }
 
-  .hint {
+  %hint {
     margin-top: 20px;
     color: var(--color-light-900);
   }
 
-  .signUpLink {
+  %link {
     @include typography($size: m, $weight: bold, $line-height: m);
 
     margin-top: 10px;
