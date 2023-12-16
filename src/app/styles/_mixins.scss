@@ -74,17 +74,9 @@
 
 $all-form-items: container, title, form, field, input, caption, button, hint, link;
 
+// To extend or overwrite the mixin styles,
+// use @extend at-rule with the appropriate placeholder-selector under the mixin invocation
 @mixin form-card($isFlex: true, $items: ()) {
-  @each $item in $items {
-    @if not list.index($all-form-items, $item) {
-      @error "#{$item} item is not supported by mixin. List of supported items: #{$all-form-items}";
-    }
-
-    .#{$item} {
-      @extend %#{$item} !optional;
-    }
-  }
-
   %container {
     @include card-container($isFlex, $justify: null, $direction: column);
   }
@@ -135,5 +127,15 @@ $all-form-items: container, title, form, field, input, caption, button, hint, li
     @include typography($size: m, $weight: bold, $line-height: m);
 
     margin-top: 10px;
+  }
+
+  @each $item in $items {
+    @if not list.index($all-form-items, $item) {
+      @error "#{$item} item is not supported by mixin. List of supported items: #{$all-form-items}";
+    }
+
+    .#{$item} {
+      @extend %#{$item} !optional;
+    }
   }
 }
