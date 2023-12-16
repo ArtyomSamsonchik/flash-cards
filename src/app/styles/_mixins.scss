@@ -49,6 +49,10 @@
   $disabled-bg-color: $bg-color,
   $disabled-text-color: $text-color
 ) {
+  @if not & {
+    @error 'The reset-input-autofill mixin has been used in the global scope. It is only allowed to be used inside an arbitrary ruselet.';
+  }
+
   $parent: selector.append(&, ':-webkit-autofill');
   $parent-disabled: selector.append(&, 'Disabled:-webkit-autofill');
 
