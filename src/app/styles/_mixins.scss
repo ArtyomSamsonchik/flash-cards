@@ -39,8 +39,6 @@
   }
 }
 
-// TODO: add an error throwing statement if parent selector is null
-// https://sass-lang.com/documentation/style-rules/parent-selector/#in-sass-script
 // Code used to reset user-agent styles applied to input with auto inserted credentials
 // Mixin must be used inside a ruleset, not at the top level of the stylesheet.
 @mixin reset-input-autofill(
