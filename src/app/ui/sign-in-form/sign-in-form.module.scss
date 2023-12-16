@@ -1,35 +1,22 @@
 @use '@/app/styles/mixins' as *;
 @use 'sass:selector';
 
-.container {
-  @include card-container($isFlex: true, $justify: null, $direction: column);
-}
+@include form-card(
+  $items: (
+    container,
+    title,
+    form,
+    field,
+    input,
+    hint,
+    link,
+  )
+);
 
-.title {
-  margin-bottom: 24px;
-}
+.fieldLast {
+  @extend %field;
 
-.form {
-  @include flex($justify: null, $direction: column);
-
-  width: 100%;
-}
-
-.field {
-  width: 100%;
-  margin-bottom: 10px;
-
-  &Last {
-    margin-bottom: 4px;
-  }
-}
-
-.input {
-  @include reset-input-autofill(
-    $bg-color: var(--color-dark-700),
-    $text-color: var(--color-light-100),
-    $disabled-text-color: var(--color-dark-300)
-  );
+  margin-bottom: 4px;
 }
 
 .checkbox {
@@ -63,7 +50,5 @@
 }
 
 .signUpLink {
-  @include typography($size: m, $weight: bold, $line-height: m);
-
-  margin-top: 10px;
+  @extend %link;
 }

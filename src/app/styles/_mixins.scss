@@ -1,4 +1,5 @@
 @use 'sass:selector';
+@use 'sass:list';
 
 @mixin flex($justify: center, $align: center, $direction: null, $wrap: null) {
   display: flex;
@@ -23,14 +24,18 @@
   }
 }
 
-// TODO: add sass:map helper-function call to avoid an error when passing named args
-// https://sass-lang.com/documentation/at-rules/mixin/#taking-arbitrary-keyword-arguments
-@mixin card-container($isFlex: false, $flex-args...) {
+@mixin card-container(
+  $isFlex: false,
+  $justify: center,
+  $align: center,
+  $direction: null,
+  $wrap: null
+) {
   max-width: 420px;
   padding: 30px;
 
   @if $isFlex {
-    @include flex($flex-args...);
+    @include flex($justify, $align, $direction, $wrap);
   }
 }
 
@@ -42,6 +47,10 @@
   $disabled-bg-color: $bg-color,
   $disabled-text-color: $text-color
 ) {
+  @if not & {
+    @error 'The reset-input-autofill mixin has been used in the global scope. It is only allowed to be used inside an arbitrary ruselet.';
+  }
+
   $parent: selector.append(&, ':-webkit-autofill');
   $parent-disabled: selector.append(&, 'Disabled:-webkit-autofill');
 
@@ -61,24 +70,28 @@
   }
 }
 
-@mixin form-card($isFlex: false, $flex-args...) {
-  .container {
-    @include card-container($isFlex, $flex-args...);
+$all-form-items: container, title, form, field, input, caption, button, hint, link;
+
+// To extend or overwrite the mixin styles,
+// use @extend at-rule with the appropriate placeholder-selector under the mixin invocation
+@mixin form-card($isFlex: true, $items: ()) {
+  %container {
+    @include card-container($isFlex, $justify: null, $direction: column);
   }
 
-  .title {
+  %title {
     margin-bottom: 24px;
   }
 
-  .form {
+  %form {
     @if $isFlex {
+      @include flex($justify: null, $direction: column);
+
       width: 100%;
     }
-
-    @include flex($justify: null, $direction: column);
   }
 
-  .field {
+  %field {
     @if $isFlex {
       width: 100%;
     }
@@ -86,7 +99,7 @@
     margin-bottom: 10px;
   }
 
-  .input {
+  %input {
     @include reset-input-autofill(
       $bg-color: var(--color-dark-700),
       $text-color: var(--color-light-100),
@@ -94,18 +107,33 @@
     );
   }
 
-  .button {
+  %caption {
+    margin-inline: 2px;
+    color: var(--color-light-900);
+  }
+
+  %button {
     margin-top: 24px;
   }
 
-  .hint {
+  %hint {
     margin-top: 20px;
     color: var(--color-light-900);
   }
 
-  .signUpLink {
+  %link {
     @include typography($size: m, $weight: bold, $line-height: m);
 
     margin-top: 10px;
+  }
+
+  @each $item in $items {
+    @if not list.index($all-form-items, $item) {
+      @error "#{$item} item is not supported by mixin. List of supported items: #{$all-form-items}";
+    }
+
+    .#{$item} {
+      @extend %#{$item} !optional;
+    }
   }
 }

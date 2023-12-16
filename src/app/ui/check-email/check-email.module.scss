@@ -1,0 +1,23 @@
+@use '@/app/styles/mixins' as *;
+
+@include form-card(
+  $items: (
+    container,
+    title,
+    caption,
+  )
+);
+
+.icon {
+  width: 96px;
+  height: 96px;
+  margin-bottom: 24px;
+}
+
+.caption {
+  text-align: center;
+}
+
+.button {
+  margin-top: 36px;
+}

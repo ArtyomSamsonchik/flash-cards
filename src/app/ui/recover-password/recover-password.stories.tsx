@@ -37,7 +37,7 @@ const meta = {
 
   component: RecoverPassword,
   tags: ['autodocs'],
-  title: 'Components/RecoverPassword',
+  title: 'Components/Auth/RecoverPassword',
 } satisfies Meta<typeof RecoverPassword>
 
 export default meta
