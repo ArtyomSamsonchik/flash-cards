@@ -41,6 +41,7 @@
 
 // Code used to reset user-agent styles applied to input with auto inserted credentials
 // Mixin must be used inside a ruleset, not at the top level of the stylesheet.
+// It also produces &Disabled classname for use in the components classes
 @mixin reset-input-autofill(
   $bg-color,
   $text-color,
